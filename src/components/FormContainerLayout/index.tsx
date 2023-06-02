@@ -1,57 +1,39 @@
 import React, { ReactNode } from 'react'
-import { FormWrapper, ImageContainer, MainContainer } from './styles'
+import {
+  FormMiddleSection,
+  FormWrapper,
+  ImageContainer,
+  MainContainer,
+  SideTextContainer,
+} from './styles'
 
 interface FormContainerInterface {
   children: ReactNode
+  dynamicPageName: string
   dynamicIntro: string
-  dynamicTitle: string
+  dynamicGreeting: string
 }
 
 const FormContainerLayout = ({
   children,
   dynamicIntro,
-  dynamicTitle,
+  dynamicGreeting,
+  dynamicPageName,
 }: FormContainerInterface) => {
   return (
     <MainContainer>
       <FormWrapper>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '50px',
-            boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
-            width: '90%',
-            padding: '8rem 0px 8rem 0px',
-          }}
-        >
-          <h1 style={{ textDecoration: 'underline #807AFF' }}>
-            {dynamicTitle}
-          </h1>
+        <FormMiddleSection>
+          <h1>{dynamicPageName}</h1>
           {children}
-        </div>
+        </FormMiddleSection>
       </FormWrapper>
-
       <ImageContainer>
         <div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              alignSelf: 'flex-end',
-              marginLeft: '110px',
-              textAlign: 'center',
-            }}
-          >
-            <h1>Welcome back!</h1>
-            <p>
-              Securely access your account by entering your credentials. We
-              prioritize your privacy and data protection, ensuring a safe and
-              reliable login experience. If you dont have an account, sign up
-              today and join our community of users!
-            </p>
-          </div>
+          <SideTextContainer>
+            <h1>{dynamicGreeting}</h1>
+            <p>{dynamicIntro}</p>
+          </SideTextContainer>
         </div>
       </ImageContainer>
     </MainContainer>

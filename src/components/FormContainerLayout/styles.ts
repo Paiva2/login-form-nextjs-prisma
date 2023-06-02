@@ -31,7 +31,7 @@ export const FormWrapper = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    gap: '35px',
+    gap: '2.1875rem',
   },
 })
 
@@ -39,7 +39,7 @@ export const FloatInputWrapper = styled('div', {
   position: 'relative',
 
   label: {
-    fontSize: '18px',
+    fontSize: '1.125rem',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -51,10 +51,10 @@ export const FloatInputWrapper = styled('div', {
   },
 
   input: {
-    paddingLeft: '5px',
-    width: '250px',
-    height: '30px',
-    fontSize: '18px',
+    paddingLeft: '.3125rem',
+    width: '15.625rem',
+    height: '1.875rem',
+    fontSize: '1.125rem',
     border: 0,
     borderBottom: '2px solid #706AE5',
     outline: 'none',
@@ -96,7 +96,7 @@ export const ImageContainer = styled('div', {
     backgroundImage: 'url("https://i.imgur.com/OeloDl2.jpg")',
     backgroundSize: 'cover',
     color: '#FFF',
-    padding: '10px',
+    paddingRight: '.625rem',
   },
 })
 
@@ -104,14 +104,37 @@ export const FormFooter = styled('div', {
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
-  gap: '10px',
+  gap: '.625rem',
 
   span: {
     color: '#807AFF',
-    fontWeight: 500,
+    fontWeight: 700,
 
     '&:hover': {
       textDecoration: 'underline',
     },
   },
+})
+
+export const FormMiddleSection = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '3.125rem',
+  boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
+  width: '90%',
+  padding: '8rem 0px 8rem 0px',
+
+  h1: {
+    textDecoration: 'underline #807AFF',
+  },
+})
+
+export const SideTextContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '.625rem',
+  alignSelf: 'flex-end',
+  width: '70%',
+  textAlign: 'center',
+  overflowY: 'auto',
 })

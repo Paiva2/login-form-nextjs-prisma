@@ -70,9 +70,8 @@ export const globalStyles = globalCss({
     justifyContent: 'center',
     minHeight: '100vh',
     minWidth: '100vw',
-    background: '#f5f5f5',
-    /* backgroundImage: 'url("https://i.imgur.com/pMvw9rz.jpg")',
-    backgroundSize: 'cover', */
+    backgroundImage: 'url("https://i.imgur.com/P29VV5G.png")',
+    backgroundSize: 'cover',
   },
 
   'a:-webkit-any-link': {

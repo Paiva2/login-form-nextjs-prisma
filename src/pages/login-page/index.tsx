@@ -6,11 +6,17 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, FormWrapper, SocialMediaWrapper } from './styles'
-import { GoogleLogo, FacebookLogo, ArrowRight } from '@phosphor-icons/react'
+import {
+  GoogleLogo,
+  FacebookLogo,
+  ArrowRight,
+  TwitterLogo,
+} from '@phosphor-icons/react'
 import {
   FloatInputWrapper,
   FormFooter,
 } from '@/src/components/FormContainerLayout/styles'
+import { sideGreetings } from '@/src/utils/sideGreetings'
 
 const loginFormSchema = z.object({
   username: z
@@ -27,12 +33,15 @@ function LoginPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
   const handleSubmitLogin = (data: LoginFormData) => {}
+
+  const { loginPage } = sideGreetings
 
   return (
     <>
@@ -41,7 +50,11 @@ function LoginPage() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <FormContainerLayout dynamicTitle="Login">
+      <FormContainerLayout
+        dynamicIntro={loginPage.text}
+        dynamicGreeting={loginPage.title}
+        dynamicPageName="Login"
+      >
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
             <input {...register('username')} type="text" />
@@ -55,28 +68,35 @@ function LoginPage() {
 
           <FormFooter>
             <Button buttonType="signIn" disabled={isSubmitting} type="submit">
-              Sign In <ArrowRight size={20} />
+              Sign In <ArrowRight weight="bold" size={20} />
             </Button>
             <p>
               Don&apos;t have an account?{' '}
-              <Link href="#">
+              <Link href="/register">
                 <span>Register</span>
               </Link>
             </p>
 
             <p>
               Forgot your{' '}
-              <Link href="#">
+              <Link href="/reset-password">
                 <span>password?</span>
               </Link>
             </p>
 
             <SocialMediaWrapper>
               <Button buttonType="socialMediaButton">
-                <GoogleLogo weight="bold" color="#DB4437" size={40} />
+                <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
               <Button buttonType="socialMediaButton">
-                <FacebookLogo weight="bold" color="#4267B2" size={40} />
+                <FacebookLogo
+                  className="facebookIcon"
+                  weight="bold"
+                  size={40}
+                />
+              </Button>
+              <Button buttonType="socialMediaButton">
+                <TwitterLogo className="twitterIcon" size={40} weight="bold" />
               </Button>
             </SocialMediaWrapper>
           </FormFooter>
