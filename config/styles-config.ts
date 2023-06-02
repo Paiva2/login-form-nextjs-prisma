@@ -55,6 +55,8 @@ export const globalStyles = globalCss({
     margin: 0,
     padding: 0,
     boxSizing: 'border-box',
+    '-webkit-font-smoothing': 'antialiased',
+    fontFamily: 'Montserrat, sans-serif',
 
     '&:focus': {
       outline: 'none',
@@ -67,6 +69,10 @@ export const globalStyles = globalCss({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
+    minWidth: '100vw',
+    background: '#f5f5f5',
+    /* backgroundImage: 'url("https://i.imgur.com/pMvw9rz.jpg")',
+    backgroundSize: 'cover', */
   },
 
   'a:-webkit-any-link': {
