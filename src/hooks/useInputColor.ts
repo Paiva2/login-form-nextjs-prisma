@@ -1,7 +1,7 @@
 export function useInputColors(
-  firstInput: string | number, // some inputs on react-hook-form are typed as numbers (password for example)
-  secondInput: string | number,
-  thirdInput?: string | number,
+  firstInput: string,
+  secondInput: string,
+  thirdInput?: string,
 ) {
   let checkFilledInputs = false
 

@@ -103,7 +103,7 @@ export const FormFooter = styled('div', {
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
-  gap: '.625rem',
+  gap: '.8125rem',
 
   span: {
     color: '#807AFF',
@@ -118,6 +118,9 @@ export const FormFooter = styled('div', {
 export const FormMiddleSection = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '20px',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
   width: '90%',
   height: '100%',

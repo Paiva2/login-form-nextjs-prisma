@@ -1,11 +1,16 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, FormWrapper, SocialMediaWrapper } from './styles'
+import {
+  Button,
+  FormErrorsWrapper,
+  FormWrapper,
+  SocialMediaWrapper,
+} from './styles'
 import {
   GoogleLogo,
   FacebookLogo,
@@ -23,7 +28,7 @@ const loginFormSchema = z.object({
     .string()
     .min(3, { message: 'Username must be at least 3 characters!' }),
   password: z
-    .number()
+    .string()
     .min(3, { message: 'Password must be at least 3 characters!' }),
 })
 
@@ -35,17 +40,25 @@ function LoginPage() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
+    reset,
+    clearErrors,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
-  const handleSubmitLogin = (data: LoginFormData) => {}
+  const handleSubmitLogin = (data: LoginFormData) => {
+    reset()
+  }
 
   const { loginPage } = sideGreetings
 
   const usernameInput = watch('username')
 
   const passwordInput = watch('password')
+
+  useEffect(() => {
+    !usernameInput && !passwordInput && clearErrors()
+  }, [usernameInput, passwordInput, clearErrors])
 
   const floatLabel = {
     top: -25,
@@ -66,12 +79,15 @@ function LoginPage() {
       >
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
-            <input {...register('username')} type="text" />
+            <input {...register('username', { required: true })} type="text" />
             <label style={usernameInput ? floatLabel : {}}>Username</label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
-            <input {...register('password')} type="password" />
+            <input
+              {...register('password', { required: true })}
+              type="password"
+            />
             <label style={passwordInput ? floatLabel : {}}>Password</label>
           </FloatInputWrapper>
 
@@ -79,6 +95,10 @@ function LoginPage() {
             <Button buttonType="signIn" disabled={isSubmitting} type="submit">
               Sign In <ArrowRight weight="bold" size={20} />
             </Button>
+            <FormErrorsWrapper>
+              {errors.username && <h3>{errors.username.message}</h3>}
+              {errors.password && <h3>{errors.password.message}</h3>}
+            </FormErrorsWrapper>
             <p>
               Don&apos;t have an account?{' '}
               <Link href="/register">
@@ -94,17 +114,17 @@ function LoginPage() {
             </p>
 
             <SocialMediaWrapper>
-              <Button buttonType="socialMediaButton">
+              <Button type="button" buttonType="socialMediaButton">
                 <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
-              <Button buttonType="socialMediaButton">
+              <Button type="button" buttonType="socialMediaButton">
                 <FacebookLogo
                   className="facebookIcon"
                   weight="bold"
                   size={40}
                 />
               </Button>
-              <Button buttonType="socialMediaButton">
+              <Button type="button" buttonType="socialMediaButton">
                 <TwitterLogo className="twitterIcon" size={40} weight="bold" />
               </Button>
             </SocialMediaWrapper>
