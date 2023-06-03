@@ -2,6 +2,13 @@ import { styled } from '@/config/styles-config'
 
 export const FormWrapper = styled('form', {})
 
+export const FormErrorsWrapper = styled('div', {
+  minHeight: '3.4375rem',
+
+  fontSize: '.75rem',
+  color: '#D83131',
+})
+
 export const Button = styled('button', {
   display: 'flex',
   alignItems: 'center',

@@ -5,31 +5,27 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, FormWrapper, SocialMediaWrapper } from './styles'
-import {
-  GoogleLogo,
-  FacebookLogo,
-  TwitterLogo,
-  ArrowBendUpLeft,
-} from '@phosphor-icons/react'
+import { Button, FormErrorsWrapper, FormWrapper } from './styles'
+import { ArrowBendUpLeft } from '@phosphor-icons/react'
 import {
   FloatInputWrapper,
   FormFooter,
 } from '@/src/components/FormContainerLayout/styles'
 import { sideGreetings } from '@/src/utils/sideGreetings'
+import { useInputColors } from '@/src/hooks/useInputColor'
 
-const loginFormSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'Username must be at least 3 characters!' })
-    .regex(/^[a-zA-Z0-9]*$/),
-  password: z
-    .number()
-    .min(3, { message: 'Password must be at least 3 characters!' }),
-  confirmPassword: z
-    .number()
-    .min(3, { message: 'Password must be at least 3 characters!' }),
-})
+const loginFormSchema = z
+  .object({
+    username: z.string(),
+    password: z
+      .string()
+      .min(3, { message: 'Password must be at least 3 characters!' }),
+    confirmPassword: z.string(),
+  })
+  .refine((field) => field.password === field.confirmPassword, {
+    message: "Passwords don't match!",
+    path: ['confirmPassword'],
+  })
 
 type LoginFormData = z.infer<typeof loginFormSchema>
 
@@ -56,7 +52,14 @@ function ResetPassword() {
   const floatLabel = {
     top: -25,
     fontSize: '.9375rem',
+    color: 'green',
   }
+
+  const { isAnyInputFilled } = useInputColors(
+    usernameInput,
+    passwordInput,
+    confirmPasswordInput,
+  )
 
   return (
     <>
@@ -73,17 +76,21 @@ function ResetPassword() {
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
             <input {...register('username')} type="text" />
-            <label style={usernameInput ? floatLabel : {}}>Username</label>
+            <label style={usernameInput ? floatLabel : isAnyInputFilled}>
+              Username
+            </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('password')} type="password" />
-            <label style={passwordInput ? floatLabel : {}}>Password</label>
+            <label style={passwordInput ? floatLabel : isAnyInputFilled}>
+              Password
+            </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('confirmPassword')} type="password" />
-            <label style={confirmPasswordInput ? floatLabel : {}}>
+            <label style={confirmPasswordInput ? floatLabel : isAnyInputFilled}>
               Confirm password
             </label>
           </FloatInputWrapper>
@@ -96,6 +103,11 @@ function ResetPassword() {
             >
               Confirm
             </Button>
+            <FormErrorsWrapper>
+              {<h3>{errors.username?.message}</h3>}
+              {<h3>{errors.password?.message}</h3>}
+              {<h3>{errors.confirmPassword?.message}</h3>}
+            </FormErrorsWrapper>
           </FormFooter>
           <Link href="/">
             <Button
