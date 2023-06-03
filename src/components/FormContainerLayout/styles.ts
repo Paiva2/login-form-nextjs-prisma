@@ -4,6 +4,7 @@ export const MainContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   width: '50%',
+  minWidth: '960px',
   margin: '0 auto',
   backgroundColor: '#FFFF',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
@@ -17,7 +18,7 @@ export const FormWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  width: '55%',
+  width: '50%',
   height: '85%',
   color: '#5A6268',
 

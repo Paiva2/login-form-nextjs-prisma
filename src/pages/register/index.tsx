@@ -1,7 +1,7 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -43,6 +43,8 @@ function Register() {
     resolver: zodResolver(loginFormSchema),
   })
 
+  let isAnyInputFilled = false
+
   const handleSubmitLogin = (data: LoginFormData) => {}
 
   const { registerPage } = sideGreetings
@@ -56,7 +58,16 @@ function Register() {
   const floatLabel = {
     top: -25,
     fontSize: '.9375rem',
+    color: 'green',
   }
+
+  if (usernameInput || passwordInput || confirmPasswordInput) {
+    isAnyInputFilled = true
+  } else {
+    isAnyInputFilled = false
+  }
+
+  const checkFilledInputs = isAnyInputFilled ? { color: 'red' } : {}
 
   return (
     <>
@@ -73,17 +84,23 @@ function Register() {
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
             <input {...register('username')} type="text" />
-            <label style={usernameInput ? floatLabel : {}}>Username</label>
+            <label style={usernameInput ? floatLabel : checkFilledInputs}>
+              Username
+            </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('password')} type="password" />
-            <label style={passwordInput ? floatLabel : {}}>Password</label>
+            <label style={passwordInput ? floatLabel : checkFilledInputs}>
+              Password
+            </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('confirmPassword')} type="password" />
-            <label style={confirmPasswordInput ? floatLabel : {}}>
+            <label
+              style={confirmPasswordInput ? floatLabel : checkFilledInputs}
+            >
               Confirm password
             </label>
           </FloatInputWrapper>
