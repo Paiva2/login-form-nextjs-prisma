@@ -1,11 +1,16 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, FormWrapper, SocialMediaWrapper } from './styles'
+import {
+  Button,
+  FormErrorsWrapper,
+  FormWrapper,
+  SocialMediaWrapper,
+} from './styles'
 import {
   GoogleLogo,
   FacebookLogo,
@@ -19,18 +24,23 @@ import {
 import { sideGreetings } from '@/src/utils/sideGreetings'
 import { useInputColors } from '@/src/hooks/useInputColor'
 
-const loginFormSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'Username must be at least 3 characters!' })
-    .regex(/^[a-zA-Z0-9]*$/),
-  password: z
-    .number()
-    .min(3, { message: 'Password must be at least 3 characters!' }),
-  confirmPassword: z
-    .number()
-    .min(3, { message: 'Password must be at least 3 characters!' }),
-})
+const loginFormSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, { message: 'Username must be at least 3 characters!' })
+      .regex(/^[a-zA-Z0-9]*$/, {
+        message: 'Username must have only letters and numbers!',
+      }),
+    password: z
+      .string()
+      .min(3, { message: 'Password must be at least 3 characters!' }),
+    confirmPassword: z.string(),
+  })
+  .refine((field) => field.password === field.confirmPassword, {
+    message: "Passwords don't match!",
+    path: ['confirmPassword'],
+  })
 
 type LoginFormData = z.infer<typeof loginFormSchema>
 
@@ -40,11 +50,14 @@ function Register() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
-  const handleSubmitLogin = (data: LoginFormData) => {}
+  const handleSubmitLogin = (data: LoginFormData) => {
+    reset()
+  }
 
   const { registerPage } = sideGreetings
 
@@ -104,6 +117,12 @@ function Register() {
             <Button buttonType="register" disabled={isSubmitting} type="submit">
               Register
             </Button>
+
+            <FormErrorsWrapper>
+              {<h3>{errors.username?.message}</h3>}
+              {<h3>{errors.password?.message}</h3>}
+              {<h3>{errors.confirmPassword?.message}</h3>}
+            </FormErrorsWrapper>
 
             <p>
               Forgot your{' '}

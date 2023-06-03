@@ -3,12 +3,12 @@ import { styled } from '@/config/styles-config'
 export const MainContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  width: '50%',
+  width: '55%',
   minWidth: '960px',
   margin: '0 auto',
   backgroundColor: '#FFFF',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
-  height: '43.75rem',
+  height: '46.875rem',
   justifyContent: 'center',
   br: '5px',
 })
@@ -19,7 +19,7 @@ export const FormWrapper = styled('div', {
   justifyContent: 'center',
   flexDirection: 'column',
   width: '50%',
-  height: '85%',
+  height: '90%',
   color: '#5A6268',
 
   h1: {
@@ -125,7 +125,7 @@ export const FormMiddleSection = styled('div', {
   width: '90%',
   height: '100%',
   br: '5px',
-  pd: '1.875rem 0px 0px 0px',
+  pd: '2.9375rem 0px 0px 0px',
 
   h1: {
     textDecoration: 'underline #807AFF',

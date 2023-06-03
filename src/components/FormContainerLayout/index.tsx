@@ -21,7 +21,11 @@ const FormContainerLayout = ({
   dynamicPageName,
 }: FormContainerInterface) => {
   return (
-    <MainContainer>
+    <MainContainer
+      style={
+        dynamicPageName !== 'Login' ? { flexDirection: 'row-reverse' } : {}
+      }
+    >
       <FormWrapper>
         <FormMiddleSection>
           <h1>{dynamicPageName}</h1>

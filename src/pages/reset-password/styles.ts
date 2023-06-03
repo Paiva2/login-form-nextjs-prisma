@@ -1,10 +1,6 @@
 import { styled } from '@/config/styles-config'
 
-export const FormWrapper = styled('form', {
-  '.test': {
-    background: 'red !important',
-  },
-})
+export const FormWrapper = styled('form', {})
 
 export const Button = styled('button', {
   display: 'flex',
@@ -46,51 +42,6 @@ export const Button = styled('button', {
           mozTransform: 'scale(1.05)',
           webKitTransform: 'scale(1.05)',
           transform: 'scale(1.05)',
-        },
-      },
-
-      socialMediaButton: {
-        background: 'none',
-        border: 'none',
-        br: '9999px',
-        pd: '.3125rem',
-        font: 0,
-
-        svg: {
-          br: '9999px',
-        },
-
-        '.facebookIcon': {
-          fill: '#4267B2',
-          transition: 'all .1s',
-          padding: '.3125rem',
-        },
-
-        '.facebookIcon:hover': {
-          backgroundColor: '#4267B2',
-          fill: '#FFF',
-        },
-
-        '.googleIcon': {
-          fill: '#DB4437',
-          transition: 'all .1s',
-          padding: '.3125rem',
-        },
-
-        '.googleIcon:hover': {
-          backgroundColor: '#DB4437',
-          fill: '#FFF',
-        },
-
-        '.twitterIcon': {
-          fill: '#1DA1F2',
-          transition: 'all .1s',
-          padding: '.3125rem',
-        },
-
-        '.twitterIcon:hover': {
-          backgroundColor: '#1DA1F2',
-          fill: '#FFF',
         },
       },
     },
