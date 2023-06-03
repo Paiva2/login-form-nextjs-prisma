@@ -1,7 +1,7 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,6 +17,7 @@ import {
   FormFooter,
 } from '@/src/components/FormContainerLayout/styles'
 import { sideGreetings } from '@/src/utils/sideGreetings'
+import { useInputColors } from '@/src/hooks/useInputColor'
 
 const loginFormSchema = z.object({
   username: z
@@ -43,8 +44,6 @@ function Register() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  let isAnyInputFilled = false
-
   const handleSubmitLogin = (data: LoginFormData) => {}
 
   const { registerPage } = sideGreetings
@@ -61,13 +60,11 @@ function Register() {
     color: 'green',
   }
 
-  if (usernameInput || passwordInput || confirmPasswordInput) {
-    isAnyInputFilled = true
-  } else {
-    isAnyInputFilled = false
-  }
-
-  const checkFilledInputs = isAnyInputFilled ? { color: 'red' } : {}
+  const { isAnyInputFilled } = useInputColors(
+    usernameInput,
+    passwordInput,
+    confirmPasswordInput,
+  )
 
   return (
     <>
@@ -84,23 +81,21 @@ function Register() {
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
             <input {...register('username')} type="text" />
-            <label style={usernameInput ? floatLabel : checkFilledInputs}>
+            <label style={usernameInput ? floatLabel : isAnyInputFilled}>
               Username
             </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('password')} type="password" />
-            <label style={passwordInput ? floatLabel : checkFilledInputs}>
+            <label style={passwordInput ? floatLabel : isAnyInputFilled}>
               Password
             </label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('confirmPassword')} type="password" />
-            <label
-              style={confirmPasswordInput ? floatLabel : checkFilledInputs}
-            >
+            <label style={confirmPasswordInput ? floatLabel : isAnyInputFilled}>
               Confirm password
             </label>
           </FloatInputWrapper>
