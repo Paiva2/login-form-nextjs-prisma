@@ -43,6 +43,15 @@ function LoginPage() {
 
   const { loginPage } = sideGreetings
 
+  const usernameInput = watch('username')
+
+  const passwordInput = watch('password')
+
+  const floatLabel = {
+    top: -25,
+    fontSize: '.9375rem',
+  }
+
   return (
     <>
       <Head>
@@ -58,12 +67,12 @@ function LoginPage() {
         <FormWrapper onSubmit={handleSubmit(handleSubmitLogin)}>
           <FloatInputWrapper>
             <input {...register('username')} type="text" />
-            <label>Username</label>
+            <label style={usernameInput ? floatLabel : {}}>Username</label>
           </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('password')} type="password" />
-            <label>Password</label>
+            <label style={passwordInput ? floatLabel : {}}>Password</label>
           </FloatInputWrapper>
 
           <FormFooter>

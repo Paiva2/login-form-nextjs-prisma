@@ -23,7 +23,7 @@ const FormContainerLayout = ({
   return (
     <MainContainer>
       <FormWrapper>
-        <FormMiddleSection>
+        <FormMiddleSection className="test">
           <h1>{dynamicPageName}</h1>
           {children}
         </FormMiddleSection>

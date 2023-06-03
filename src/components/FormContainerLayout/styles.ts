@@ -18,6 +18,7 @@ export const FormWrapper = styled('div', {
   justifyContent: 'center',
   flexDirection: 'column',
   width: '55%',
+  height: '85%',
   color: '#5A6268',
 
   h1: {
@@ -52,20 +53,17 @@ export const FloatInputWrapper = styled('div', {
 
   input: {
     paddingLeft: '.3125rem',
-    width: '15.625rem',
+    width: '19.625rem',
     height: '1.875rem',
     fontSize: '1.125rem',
     border: 0,
     borderBottom: '2px solid #706AE5',
     outline: 'none',
 
-    '&:focus': {
-      borderBottom: '2px solid #807AFF',
-    },
-
     '&:focus + label': {
       top: -25,
       pointerEvents: 'none',
+      fontSize: '.9375rem',
     },
 
     '&:valid + label': {
@@ -119,10 +117,11 @@ export const FormFooter = styled('div', {
 export const FormMiddleSection = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '3.125rem',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
   width: '90%',
-  padding: '8rem 0px 8rem 0px',
+  height: '100%',
+  br: '5px',
+  pd: '1.875rem 0px 0px 0px',
 
   h1: {
     textDecoration: 'underline #807AFF',

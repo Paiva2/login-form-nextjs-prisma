@@ -18,7 +18,7 @@ export const Button = styled('button', {
         border: 0,
         height: '2.8125rem',
         pd: '.625rem',
-        width: '100%',
+        width: '19.625rem',
         fontSize: '1rem',
         transition: 'background .2s ease-in-out, transform .4s',
 
@@ -39,6 +39,10 @@ export const Button = styled('button', {
         pd: '.3125rem',
         font: 0,
 
+        svg: {
+          br: '9999px',
+        },
+
         '.facebookIcon': {
           fill: '#4267B2',
           transition: 'all .1s',
@@ -46,7 +50,6 @@ export const Button = styled('button', {
         },
 
         '.facebookIcon:hover': {
-          br: '9999px',
           backgroundColor: '#4267B2',
           fill: '#FFF',
         },
@@ -58,13 +61,11 @@ export const Button = styled('button', {
         },
 
         '.googleIcon:hover': {
-          br: '9999px',
           backgroundColor: '#DB4437',
           fill: '#FFF',
         },
 
         '.twitterIcon': {
-          br: '9999px',
           fill: '#1DA1F2',
           transition: 'all .1s',
           padding: '.3125rem',
@@ -81,7 +82,6 @@ export const Button = styled('button', {
 
 export const SocialMediaWrapper = styled('div', {
   display: 'flex',
-  gap: '1rem',
   padding: '.9375rem .3125rem 0px .3125rem',
   borderBottom: '3px solid #807AFF',
 })
