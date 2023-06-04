@@ -22,6 +22,10 @@ import {
   FormFooter,
 } from '@/src/components/FormContainerLayout/styles'
 import { sideGreetings } from '@/src/utils/sideGreetings'
+import { apiMethod } from '@/src/lib/axios'
+import { toastMessage } from '@/src/lib/alertMessage'
+import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
 
 const loginFormSchema = z.object({
   username: z
@@ -46,8 +50,23 @@ function LoginPage() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  const handleSubmitLogin = (data: LoginFormData) => {
-    reset()
+  const route = useRouter()
+
+  const handleSubmitLogin = async (data: LoginFormData) => {
+    try {
+      const response = await apiMethod.post('/login', data)
+      if (response.status === 202) {
+        reset()
+
+        route.push('/home')
+      }
+
+      return response
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastMessage('warning', error.response?.data)
+      }
+    }
   }
 
   const { loginPage } = sideGreetings
