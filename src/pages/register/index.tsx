@@ -24,6 +24,8 @@ import {
 import { sideGreetings } from '@/src/utils/sideGreetings'
 import { useInputColors } from '@/src/hooks/useInputColor'
 import { apiMethod } from '@/src/lib/axios'
+import { AxiosError } from 'axios'
+import { toastMessage } from '@/src/lib/alertMessage'
 
 const loginFormSchema = z
   .object({
@@ -57,9 +59,16 @@ function Register() {
   })
 
   const handleSubmitLogin = async (data: LoginFormData) => {
-    await apiMethod.post('/register', data)
-
-    reset()
+    try {
+      const response = await apiMethod.post('/register', data)
+      reset()
+      toastMessage('success', response.data)
+      return response
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastMessage('warning', error.response?.data)
+      }
+    }
   }
 
   const { registerPage } = sideGreetings
