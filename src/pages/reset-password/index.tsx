@@ -13,6 +13,9 @@ import {
 } from '@/src/components/FormContainerLayout/styles'
 import { sideGreetings } from '@/src/utils/sideGreetings'
 import { useInputColors } from '@/src/hooks/useInputColor'
+import { apiMethod } from '@/src/lib/axios'
+import { toastMessage } from '@/src/lib/alertMessage'
+import { AxiosError } from 'axios'
 
 const loginFormSchema = z
   .object({
@@ -34,12 +37,24 @@ function ResetPassword() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
-  const handleSubmitLogin = (data: LoginFormData) => {}
+  const handleSubmitLogin = async (data: LoginFormData) => {
+    try {
+      const response = await apiMethod.patch('/password-reset', data)
+      reset()
+      toastMessage('success', response.data)
+      return response
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toastMessage('warning', error.response?.data)
+      }
+    }
+  }
 
   const { forgotPasswordPage } = sideGreetings
 
