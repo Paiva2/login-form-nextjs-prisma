@@ -23,6 +23,7 @@ import {
 } from '@/src/components/FormContainerLayout/styles'
 import { sideGreetings } from '@/src/utils/sideGreetings'
 import { useInputColors } from '@/src/hooks/useInputColor'
+import { apiMethod } from '@/src/lib/axios'
 
 const loginFormSchema = z
   .object({
@@ -55,7 +56,9 @@ function Register() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  const handleSubmitLogin = (data: LoginFormData) => {
+  const handleSubmitLogin = async (data: LoginFormData) => {
+    await apiMethod.post('/register', data)
+
     reset()
   }
 
