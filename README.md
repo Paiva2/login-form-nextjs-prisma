@@ -1,4 +1,9 @@
-## Not finished yet.
+## Not finished yet (basic validations with username and password are already finished and integrated with SQLite).
+# Working on
+
+- Auth with providers (Google, Facebook, Twitter)
+- Auth with providers validations
+- Home before login styles
 
 # Images
 
