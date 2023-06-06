@@ -26,6 +26,7 @@ import { apiMethod } from '@/src/lib/axios'
 import { toastMessage } from '@/src/lib/alertMessage'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
+import { signIn, useSession } from 'next-auth/react'
 
 const loginFormSchema = z.object({
   username: z
@@ -52,6 +53,8 @@ function LoginPage() {
 
   const route = useRouter()
 
+  const session = useSession()
+
   const handleSubmitLogin = async (data: LoginFormData) => {
     try {
       const response = await apiMethod.post('/login', data)
@@ -67,6 +70,10 @@ function LoginPage() {
         toastMessage('warning', error.response?.data)
       }
     }
+  }
+
+  const handleGoogleLogin = async () => {
+    await signIn('google')
   }
 
   const { loginPage } = sideGreetings
@@ -133,7 +140,11 @@ function LoginPage() {
             </p>
 
             <SocialMediaWrapper>
-              <Button type="button" buttonType="socialMediaButton">
+              <Button
+                onClick={handleGoogleLogin}
+                type="button"
+                buttonType="socialMediaButton"
+              >
                 <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
               <Button type="button" buttonType="socialMediaButton">
