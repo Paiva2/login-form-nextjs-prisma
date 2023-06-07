@@ -24,7 +24,12 @@ export default async function handler(
       return res.status(404).end('This e-mai is not registered!')
     }
 
-    return res.status(202).end()
+    return res.status(202).end(
+      JSON.stringify({
+        pathname: '/home',
+        query: { user: req.body.name },
+      }),
+    )
   }
 
   const isUserAlreadyRegistered = await prisma.user.findUnique({
@@ -41,5 +46,9 @@ export default async function handler(
     }
   }
 
-  return res.status(202).end()
+  return res
+    .status(202)
+    .end(
+      JSON.stringify({ pathname: '/home', query: { user: req.body.username } }),
+    )
 }

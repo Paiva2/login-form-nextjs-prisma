@@ -77,12 +77,11 @@ function LoginPage() {
   const handleSubmitLogin = async (data: LoginFormData) => {
     try {
       const response = await apiMethod.post('/login', data)
+
       if (response.status === 202) {
         reset()
-
         setCookie('loginFormID', data.username, { maxAge: 25200 })
-
-        route.push('/home')
+        route.push(response.data, '/home/')
       }
 
       return response
@@ -102,10 +101,10 @@ function LoginPage() {
     try {
       const response = await apiMethod.post('/login', session.user)
 
-      setCookie('loginFormID', session.user?.email, { maxAge: 25200 }) // 7hrs
+      setCookie('loginFormID', session.user?.name, { maxAge: 25200 }) // 7hrs
 
       if (response.status === 202) {
-        route.push('/home')
+        route.push(response.data, '/home/')
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -125,8 +124,6 @@ function LoginPage() {
     if (session.data) {
       handleLoginWithEmailOnActiveSession(session.data)
     }
-
-    return true
   }
 
   useEffect(() => {
