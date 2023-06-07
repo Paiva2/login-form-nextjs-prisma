@@ -13,6 +13,20 @@ export default async function handler(
     return res.status(405).end()
   }
 
+  if (req.body?.email) {
+    const isEmailRegistered = await prisma.user.findUnique({
+      where: {
+        email: req.body.email,
+      },
+    })
+
+    if (!isEmailRegistered) {
+      return res.status(404).end('This e-mai is not registered!')
+    }
+
+    return res.status(202).end()
+  }
+
   const isUserAlreadyRegistered = await prisma.user.findUnique({
     where: {
       username: req.body.username,

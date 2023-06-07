@@ -26,7 +26,9 @@ import { apiMethod } from '@/src/lib/axios'
 import { toastMessage } from '@/src/lib/alertMessage'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { alertValidation } from '@/src/utils/alertMessage'
+import { Session } from 'next-auth'
 
 const loginFormSchema = z.object({
   username: z
@@ -46,13 +48,13 @@ function LoginPage() {
     watch,
     formState: { errors, isSubmitting },
     reset,
-    clearErrors,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
 
   const route = useRouter()
 
+  // Used with react-hook-form
   const handleSubmitLogin = async (data: LoginFormData) => {
     try {
       const response = await apiMethod.post('/login', data)
@@ -76,13 +78,34 @@ function LoginPage() {
 
   const { loginPage } = sideGreetings
 
+  const session = useSession()
+
   const usernameInput = watch('username')
 
   const passwordInput = watch('password')
 
+  // Used to login with providers
+  async function handleLoginWithEmailOnActiveSession(session: Session) {
+    try {
+      const response = await apiMethod.post('/login', session.user)
+
+      if (response.status === 202) {
+        route.push('/home')
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alertValidation('warning', error?.response?.data)
+      }
+
+      return signOut({ redirect: false })
+    }
+  }
+
   useEffect(() => {
-    !usernameInput && !passwordInput && clearErrors()
-  }, [usernameInput, passwordInput, clearErrors])
+    if (session.data) {
+      handleLoginWithEmailOnActiveSession(session.data)
+    }
+  }, [session.data]) // eslint-disable-line
 
   const floatLabel = {
     top: -25,

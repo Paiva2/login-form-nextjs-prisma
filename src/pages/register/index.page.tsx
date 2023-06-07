@@ -28,6 +28,7 @@ import { AxiosError } from 'axios'
 import { toastMessage } from '@/src/lib/alertMessage'
 import { signIn, useSession, signOut } from 'next-auth/react'
 import { alertValidation } from '@/src/utils/alertMessage'
+import { Session } from 'next-auth'
 
 const loginFormSchema = z
   .object({
@@ -99,26 +100,26 @@ function Register() {
     signIn('google')
   }
 
-  useEffect(() => {
-    async function handleRegisterWithEmailOnActiveSession() {
-      try {
-        const response = await apiMethod.post('/register', session.data?.user)
-        alertValidation('success', response.data)
+  async function handleRegisterWithEmailOnActiveSession(session: Session) {
+    try {
+      const response = await apiMethod.post('/register', session.user)
+      alertValidation('success', response.data)
 
-        return signOut({ redirect: false })
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          alertValidation('warning', error?.response?.data)
-        }
-
-        return signOut({ redirect: false })
+      return signOut({ redirect: false })
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alertValidation('warning', error?.response?.data)
       }
-    }
 
-    if (session.data) {
-      handleRegisterWithEmailOnActiveSession()
+      return signOut({ redirect: false })
     }
-  }, []) // eslint-disable-line
+  }
+
+  useEffect(() => {
+    if (session.data) {
+      handleRegisterWithEmailOnActiveSession(session.data)
+    }
+  }, [session.data]) // eslint-disable-line
 
   return (
     <>

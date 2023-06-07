@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   pageExtensions: ['page.tsx', 'api-route.ts', 'api-route.tsx'],
   images: {
     remotePatterns: [
