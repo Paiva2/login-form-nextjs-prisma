@@ -1,7 +1,7 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,6 +29,7 @@ import { useRouter } from 'next/router'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { alertValidation } from '@/src/utils/alertMessage'
 import { Session } from 'next-auth'
+import { hasCookie, setCookie } from 'cookies-next'
 
 const loginFormSchema = z.object({
   username: z
@@ -54,12 +55,26 @@ function LoginPage() {
 
   const route = useRouter()
 
+  const session = useSession()
+
+  const usernameInput = watch('username')
+
+  const passwordInput = watch('password')
+
+  const { loginPage } = sideGreetings
+
+  const isLoginCookieAvailable = hasCookie('loginFormID')
+
+  const [isLoadingValidations, setIsLoadingValidations] = useState(true)
+
   // Used with react-hook-form
   const handleSubmitLogin = async (data: LoginFormData) => {
     try {
       const response = await apiMethod.post('/login', data)
       if (response.status === 202) {
         reset()
+
+        setCookie('loginFormID', data.username, { maxAge: 25200 })
 
         route.push('/home')
       }
@@ -73,21 +88,15 @@ function LoginPage() {
   }
 
   const handleGoogleLogin = async () => {
-    await signIn('google')
+    signIn('google')
   }
-
-  const { loginPage } = sideGreetings
-
-  const session = useSession()
-
-  const usernameInput = watch('username')
-
-  const passwordInput = watch('password')
 
   // Used to login with providers
   async function handleLoginWithEmailOnActiveSession(session: Session) {
     try {
       const response = await apiMethod.post('/login', session.user)
+
+      setCookie('loginFormID', session.user?.email, { maxAge: 25200 }) // 7hrs
 
       if (response.status === 202) {
         route.push('/home')
@@ -101,15 +110,30 @@ function LoginPage() {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (isLoginCookieAvailable) {
+      route.push('/home')
+      return
+    }
+
     if (session.data) {
       handleLoginWithEmailOnActiveSession(session.data)
     }
+
+    setIsLoadingValidations(false)
   }, [session.data]) // eslint-disable-line
 
   const floatLabel = {
     top: -25,
     fontSize: '.9375rem',
+  }
+
+  if (isLoadingValidations) {
+    return (
+      <div>
+        <h2>Carregando...</h2>
+      </div>
+    )
   }
 
   return (
