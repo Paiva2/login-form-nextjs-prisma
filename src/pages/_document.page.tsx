@@ -1,3 +1,4 @@
+import { getCssText } from '@/config/styles-config'
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
@@ -10,6 +11,12 @@ export default function Document() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
+
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"
           rel="stylesheet"

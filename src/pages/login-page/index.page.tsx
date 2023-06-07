@@ -1,7 +1,7 @@
 import FormContainerLayout from '@/src/components/FormContainerLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -30,6 +30,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { alertValidation } from '@/src/utils/alertMessage'
 import { Session } from 'next-auth'
 import { hasCookie, setCookie } from 'cookies-next'
+import LoadingMessage from '@/src/components/LoadingMessage'
 
 const loginFormSchema = z.object({
   username: z
@@ -52,6 +53,11 @@ function LoginPage() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   })
+
+  const floatLabel = {
+    top: -25,
+    fontSize: '.9375rem',
+  }
 
   const route = useRouter()
 
@@ -110,7 +116,7 @@ function LoginPage() {
     }
   }
 
-  useLayoutEffect(() => {
+  const validateCookieAndSession = () => {
     if (isLoginCookieAvailable) {
       route.push('/home')
       return
@@ -120,20 +126,17 @@ function LoginPage() {
       handleLoginWithEmailOnActiveSession(session.data)
     }
 
-    setIsLoadingValidations(false)
-  }, [session.data]) // eslint-disable-line
-
-  const floatLabel = {
-    top: -25,
-    fontSize: '.9375rem',
+    return true
   }
 
+  useEffect(() => {
+    validateCookieAndSession()
+
+    setIsLoadingValidations(false)
+  }, [session.data, isLoginCookieAvailable]) // eslint-disable-line
+
   if (isLoadingValidations) {
-    return (
-      <div>
-        <h2>Carregando...</h2>
-      </div>
-    )
+    return <LoadingMessage />
   }
 
   return (
@@ -143,6 +146,7 @@ function LoginPage() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+
       <FormContainerLayout
         dynamicIntro={loginPage.text}
         dynamicGreeting={loginPage.title}
