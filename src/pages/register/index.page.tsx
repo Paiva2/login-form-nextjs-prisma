@@ -27,10 +27,7 @@ import { apiMethod } from '@/src/lib/axios'
 import { AxiosError } from 'axios'
 import { toastMessage } from '@/src/lib/alertMessage'
 import { signIn, useSession, signOut } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { getServerSession } from 'next-auth/next'
-import { GetServerSideProps } from 'next'
-import { authOptions } from '../api/auth/[...nextauth]'
+import { alertValidation } from '@/src/utils/alertMessage'
 
 const loginFormSchema = z
   .object({
@@ -98,43 +95,30 @@ function Register() {
 
   const session = useSession()
 
-  const route = useRouter()
-
-  const handleGoogleRegister = async () => {
-    await signIn('google')
+  const handleGoogleRegister = () => {
+    signIn('google')
   }
 
   useEffect(() => {
-    async function handleGetUserFromSession() {
-      if (session.data?.user) {
-        try {
-          if (session.status.includes('authenticated')) {
-            const response = await apiMethod.post(
-              '/register',
-              session.data?.user,
-            )
-            toastMessage('success', response.data)
+    async function handleRegisterWithEmailOnActiveSession() {
+      try {
+        const response = await apiMethod.post('/register', session.data?.user)
+        alertValidation('success', response.data)
 
-            reset()
-          }
-        } catch (error) {
-          if (error instanceof AxiosError) {
-            await signOut({
-              redirect: false,
-            })
-
-            toastMessage('warning', error.response?.data)
-          }
-        } finally {
-          signOut()
+        return signOut({ redirect: false })
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          alertValidation('warning', error?.response?.data)
         }
+
+        return signOut({ redirect: false })
       }
     }
 
-    handleGetUserFromSession()
-  }, [session.data?.user, reset, session.status])
-
-  console.log(session)
+    if (session.data) {
+      handleRegisterWithEmailOnActiveSession()
+    }
+  }, []) // eslint-disable-line
 
   return (
     <>
@@ -224,13 +208,3 @@ function Register() {
 }
 
 export default Register
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const sessionHandler = await getServerSession(req, res, authOptions(req, res))
-
-  return {
-    props: {
-      sessionHandler,
-    },
-  }
-}

@@ -26,7 +26,7 @@ import { apiMethod } from '@/src/lib/axios'
 import { toastMessage } from '@/src/lib/alertMessage'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 const loginFormSchema = z.object({
   username: z
@@ -52,8 +52,6 @@ function LoginPage() {
   })
 
   const route = useRouter()
-
-  const session = useSession()
 
   const handleSubmitLogin = async (data: LoginFormData) => {
     try {

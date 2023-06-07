@@ -21,7 +21,7 @@ export default async function handler(
     })
 
     if (isEmailAlreadyRegistered) {
-      return res.status(409).end('E-mail is already registered!')
+      return res.status(409).end('This e-mail is already registered!')
     }
 
     await prisma.user.create({
