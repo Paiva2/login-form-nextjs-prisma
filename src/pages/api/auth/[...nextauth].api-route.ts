@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse, NextPageContext } from 'next'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
+import FacebookProvider, { FacebookProfile } from 'next-auth/providers/facebook'
 
 export const authOptions = (
   req: NextApiRequest | NextPageContext['req'],
@@ -34,16 +35,43 @@ export const authOptions = (
           }
         },
       },
+      FacebookProvider({
+        clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET_KEY ?? '',
+        authorization: {
+          params: {
+            scope: 'email',
+          },
+        },
+      }),
+      {
+        id: 'facebook',
+        name: 'Facebook',
+        type: 'oauth',
+        version: '2.0',
+        accessTokenUrl: 'https://graph.facebook.com/oauth/access_token',
+        authorization:
+          'https://www.facebook.com/v7.0/dialog/oauth?response_type=code',
+        profile(profile: FacebookProfile) {
+          return {
+            id: profile.id,
+            name: profile.name,
+            email: profile.email,
+          }
+        },
+      },
     ],
 
     callbacks: {
       async signIn({ account }) {
-        if (
-          !account?.scope?.includes(
-            'https://www.googleapis.com/auth/userinfo.email',
-          )
-        ) {
-          return '/register/?error=permission-denied'
+        if (account?.provider === 'google') {
+          if (
+            !account?.scope?.includes(
+              'https://www.googleapis.com/auth/userinfo.email',
+            )
+          ) {
+            return '/register/?error=permission-denied'
+          }
         }
 
         return true

@@ -100,6 +100,10 @@ function Register() {
     signIn('google')
   }
 
+  const handleFacebookRegister = () => {
+    signIn('facebook')
+  }
+
   async function handleRegisterWithEmailOnActiveSession(session: Session) {
     try {
       const response = await apiMethod.post('/register', session.user)
@@ -181,7 +185,10 @@ function Register() {
               >
                 <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
-              <Button buttonType="socialMediaButton">
+              <Button
+                onClick={handleFacebookRegister}
+                buttonType="socialMediaButton"
+              >
                 <FacebookLogo
                   className="facebookIcon"
                   weight="bold"

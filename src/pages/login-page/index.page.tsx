@@ -71,7 +71,7 @@ function LoginPage() {
 
   const isLoginCookieAvailable = hasCookie('loginFormID')
 
-  const [isLoadingValidations, setIsLoadingValidations] = useState(true)
+  const [isLoadingValidations, setIsLoadingValidations] = useState(false)
 
   // Used with react-hook-form
   const handleSubmitLogin = async (data: LoginFormData) => {
@@ -94,6 +94,10 @@ function LoginPage() {
 
   const handleGoogleLogin = async () => {
     signIn('google')
+  }
+
+  const handleFacebookLogin = async () => {
+    signIn('facebook')
   }
 
   // Used to login with providers
@@ -126,11 +130,13 @@ function LoginPage() {
     }
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     validateCookieAndSession()
 
     setIsLoadingValidations(false)
-  }, [session.data, isLoginCookieAvailable]) // eslint-disable-line
+  }, [session.data, isLoginCookieAvailable]) // eslint-disable-line */
+
+  console.log(session)
 
   if (isLoadingValidations) {
     return <LoadingMessage />
@@ -193,7 +199,11 @@ function LoginPage() {
               >
                 <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
-              <Button type="button" buttonType="socialMediaButton">
+              <Button
+                onClick={handleFacebookLogin}
+                type="button"
+                buttonType="socialMediaButton"
+              >
                 <FacebookLogo
                   className="facebookIcon"
                   weight="bold"
