@@ -99,8 +99,6 @@ export const authOptions = (
           }
         }
 
-        // console.log(account, profile, token)
-
         return true
       },
     },

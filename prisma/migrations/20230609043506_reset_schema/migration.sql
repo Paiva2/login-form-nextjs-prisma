@@ -2,7 +2,8 @@
 CREATE TABLE "username" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "username" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
+    "usernameWithEmail" TEXT,
     "email" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL

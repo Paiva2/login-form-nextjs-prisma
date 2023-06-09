@@ -19,17 +19,9 @@ export default async function handler(
     },
   })
 
-  if (isUserAlreadyRegistered?.email) {
-    if (isUserAlreadyRegistered) {
-      return res.status(404).end('Username is not registered!')
-    }
-  }
-
   if (!isUserAlreadyRegistered) {
     return res.status(404).end('Username is not registered!')
   }
-
-  console.log(isUserAlreadyRegistered)
 
   await prisma.user.update({
     where: {

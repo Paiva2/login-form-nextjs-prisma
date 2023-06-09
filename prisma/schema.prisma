@@ -1,55 +1,52 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL_IDENTIFIER")
+  provider = "sqlite"
+  url      = env("DATABASE_URL_IDENTIFIER")
 }
 
 model User {
-    id                       String   @id @default(cuid())
-    username                 String?  @unique
-    password                 String
-    accountWithEmailUserName String?  @unique
-    email                    String?  @unique
-    createdAt                DateTime @default(now())
-    updatedAt                DateTime @updatedAt
+  id                String    @id @default(cuid())
+  username          String?   @unique
+  password          String?
+  usernameWithEmail String?
+  email             String?   @unique
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  sessions          Session[]
+  accounts          Account[]
 
-    accounts Account[]
-    sessions Session[]
-
-    @@map("username")
+  @@map("username")
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refreshToken      String?
-    acessToken        String?
-    expiresAt         Int?
-    tokenType         String?
-    scope             String?
-    idToken           String?
-    session_state     String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refreshToken      String?
+  acessToken        String?
+  expiresAt         Int?
+  tokenType         String?
+  scope             String?
+  idToken           String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-    @@map("accounts")
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    userId       String
-    expires      DateTime
-    sessionToken String   @unique
-    accessToken  String   @unique
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
-
-    user User @relation(fields: [userId], references: [id])
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
 }
