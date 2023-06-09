@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse, NextPageContext } from 'next'
 import NextAuth, { NextAuthOptions } from 'next-auth'
-import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
-import FacebookProvider, { FacebookProfile } from 'next-auth/providers/facebook'
+import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from 'next-auth/providers/facebook'
+import TwitterProvider from 'next-auth/providers/twitter'
 
 export const authOptions = (
   req: NextApiRequest | NextPageContext['req'],
@@ -27,7 +28,7 @@ export const authOptions = (
           'https://accounts.google.com/.well-known/openid-configuration',
         idToken: true,
         checks: ['pkce', 'state'],
-        profile(profile: GoogleProfile) {
+        profile(profile) {
           return {
             id: profile.sub,
             name: profile.name,
@@ -49,12 +50,36 @@ export const authOptions = (
         name: 'Facebook',
         type: 'oauth',
         version: '2.0',
-        accessTokenUrl: 'https://graph.facebook.com/oauth/access_token',
         authorization:
           'https://www.facebook.com/v7.0/dialog/oauth?response_type=code',
-        profile(profile: FacebookProfile) {
+        profile(profile) {
           return {
             id: profile.id,
+            name: profile.name,
+            email: profile.email,
+          }
+        },
+      },
+      TwitterProvider({
+        clientId: process.env.TWITTER_CLIENT_ID ?? '',
+        clientSecret: process.env.TWITTER_CLIENT_SECRET_KEY ?? '',
+        authorization: {
+          params: {
+            scope: 'email',
+          },
+        },
+      }),
+      {
+        id: 'twitter',
+        name: 'Twitter (Legacy)',
+        type: 'oauth',
+        version: '1.0A',
+        accessTokenUrl: 'https://api.twitter.com/oauth/access_token',
+        requestTokenUrl: 'https://api.twitter.com/oauth/request_token',
+        authorization: 'https://api.twitter.com/oauth/authenticate',
+        profile(profile) {
+          return {
+            id: profile.id_str,
             name: profile.name,
             email: profile.email,
           }
@@ -73,6 +98,8 @@ export const authOptions = (
             return '/register/?error=permission-denied'
           }
         }
+
+        // console.log(account, profile, token)
 
         return true
       },

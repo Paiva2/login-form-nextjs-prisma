@@ -26,7 +26,7 @@ export default async function handler(
 
     await prisma.user.create({
       data: {
-        username: req.body.name,
+        accountWithEmailUserName: req.body.name,
         email: req.body.email,
         password: '',
       },
@@ -41,7 +41,7 @@ export default async function handler(
     },
   })
 
-  if (isUserAlreadyRegistered) {
+  if (isUserAlreadyRegistered && isUserAlreadyRegistered.email === '') {
     return res.status(409).end('User is already registered!')
   }
 

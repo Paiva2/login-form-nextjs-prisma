@@ -104,6 +104,10 @@ function Register() {
     signIn('facebook')
   }
 
+  const handleTwitterRegister = () => {
+    signIn('twitter')
+  }
+
   async function handleRegisterWithEmailOnActiveSession(session: Session) {
     try {
       const response = await apiMethod.post('/register', session.user)
@@ -195,7 +199,10 @@ function Register() {
                   size={40}
                 />
               </Button>
-              <Button buttonType="socialMediaButton">
+              <Button
+                onClick={handleTwitterRegister}
+                buttonType="socialMediaButton"
+              >
                 <TwitterLogo className="twitterIcon" size={40} weight="bold" />
               </Button>
             </SocialMediaWrapper>
