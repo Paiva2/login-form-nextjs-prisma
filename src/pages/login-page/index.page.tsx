@@ -130,13 +130,12 @@ function LoginPage() {
     }
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     validateCookieAndSession()
 
     setIsLoadingValidations(false)
-  }, [session.data, isLoginCookieAvailable]) // eslint-disable-line */
+  }, [session.data, isLoginCookieAvailable]) // eslint-disable-line 
 
-  console.log(session)
 
   if (isLoadingValidations) {
     return <LoadingMessage />
