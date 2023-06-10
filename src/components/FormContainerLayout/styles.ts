@@ -17,7 +17,7 @@ export const MainContainer = styled('div', {
   },
 
   '@media(max-width: 880px)': {
-    flexDirection: 'column-reverse',
+    flexDirection: 'column-reverse !important',
     height: 'auto',
   },
 })
@@ -47,6 +47,10 @@ export const FormWrapper = styled('div', {
     justifyContent: 'center',
     flexDirection: 'column',
     gap: '2.1875rem',
+
+    '@media(max-width: 880px)': {
+      paddingBottom: '.625rem',
+    },
   },
 })
 
