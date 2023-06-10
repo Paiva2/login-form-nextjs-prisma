@@ -186,12 +186,14 @@ function Register() {
               <Button
                 onClick={handleGoogleRegister}
                 buttonType="socialMediaButton"
+                type="button"
               >
                 <GoogleLogo className="googleIcon" weight="bold" size={40} />
               </Button>
               <Button
                 onClick={handleFacebookRegister}
                 buttonType="socialMediaButton"
+                type="button"
               >
                 <FacebookLogo
                   className="facebookIcon"
@@ -202,6 +204,7 @@ function Register() {
               <Button
                 onClick={handleTwitterRegister}
                 buttonType="socialMediaButton"
+                type="button"
               >
                 <TwitterLogo className="twitterIcon" size={40} weight="bold" />
               </Button>

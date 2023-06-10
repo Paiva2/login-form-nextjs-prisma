@@ -100,6 +100,10 @@ function LoginPage() {
     signIn('facebook')
   }
 
+  const handleLoginTwitter = async () => {
+    signIn('twitter')
+  }
+
   // Used to login with providers
   async function handleLoginWithEmailOnActiveSession(session: Session) {
     try {
@@ -210,7 +214,11 @@ function LoginPage() {
                   size={40}
                 />
               </Button>
-              <Button type="button" buttonType="socialMediaButton">
+              <Button
+                onClick={handleLoginTwitter}
+                type="button"
+                buttonType="socialMediaButton"
+              >
                 <TwitterLogo className="twitterIcon" size={40} weight="bold" />
               </Button>
             </SocialMediaWrapper>
