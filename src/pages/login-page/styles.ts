@@ -23,9 +23,9 @@ export const Button = styled('button', {
         br: '5px',
         color: '#fff',
         border: 0,
-        height: '2.8125rem',
+        h: '2.8125rem',
         pd: '.625rem',
-        width: '19.625rem',
+        w: '19.625rem',
         fontSize: '1rem',
         transition: 'background .2s ease-in-out, transform .4s',
 
@@ -57,7 +57,7 @@ export const Button = styled('button', {
         '.facebookIcon': {
           fill: '#4267B2',
           transition: 'all .1s',
-          padding: '.3125rem',
+          pd: '.3125rem',
         },
 
         '.facebookIcon:hover': {
@@ -68,7 +68,7 @@ export const Button = styled('button', {
         '.googleIcon': {
           fill: '#DB4437',
           transition: 'all .1s',
-          padding: '.3125rem',
+          pd: '.3125rem',
         },
 
         '.googleIcon:hover': {
@@ -79,7 +79,7 @@ export const Button = styled('button', {
         '.twitterIcon': {
           fill: '#1DA1F2',
           transition: 'all .1s',
-          padding: '.3125rem',
+          pd: '.3125rem',
         },
 
         '.twitterIcon:hover': {
@@ -93,22 +93,22 @@ export const Button = styled('button', {
 
 export const SocialMediaWrapper = styled('div', {
   display: 'flex',
-  padding: '.9375rem .3125rem 0px .3125rem',
+  pd: '.9375rem .3125rem 0px .3125rem',
   borderBottom: '3px solid #807AFF',
 
   '@media(max-width: 880px)': {
     borderBottom: 'none',
-    paddingBottom: '5px',
+    paddingBottom: '.3125rem',
   },
 
   '@media(max-width: 440px)': {
     w: '85%',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 0,
+    pd: 0,
 
     svg: {
-      width: '2.1875rem',
+      w: '2.1875rem',
     },
   },
 })

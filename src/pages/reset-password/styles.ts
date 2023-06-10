@@ -39,8 +39,8 @@ export const Button = styled('button', {
         br: '5px',
         color: '#fff',
         border: 0,
-        height: '2.8125rem',
-        width: '19.625rem',
+        h: '2.8125rem',
+        w: '19.625rem',
         fontSize: '1rem',
         transition: 'background .2s ease-in-out, transform .4s',
 
@@ -57,6 +57,6 @@ export const Button = styled('button', {
 
 export const SocialMediaWrapper = styled('div', {
   display: 'flex',
-  padding: '.9375rem .3125rem 0px .3125rem',
+  pd: '.9375rem .3125rem 0px .3125rem',
   borderBottom: '3px solid #807AFF',
 })

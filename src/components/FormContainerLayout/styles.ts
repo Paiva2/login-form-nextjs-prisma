@@ -3,12 +3,12 @@ import { styled } from '@/config/styles-config'
 export const MainContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  width: '55%',
+  w: '55%',
   minWidth: '960px',
-  margin: '0 auto',
+  m: '0 auto',
   backgroundColor: '#FFFF',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
-  height: '46.875rem',
+  h: '46.875rem',
   justifyContent: 'center',
   br: '5px',
 
@@ -18,7 +18,7 @@ export const MainContainer = styled('div', {
 
   '@media(max-width: 880px)': {
     flexDirection: 'column-reverse !important',
-    height: 'auto',
+    h: 'auto',
   },
 })
 
@@ -27,8 +27,8 @@ export const FormWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  width: '50%',
-  height: '90%',
+  w: '50%',
+  h: '90%',
   color: '#5A6268',
 
   '@media(max-width: 880px)': {
@@ -40,8 +40,8 @@ export const FormWrapper = styled('div', {
   },
 
   form: {
-    width: '100%',
-    height: '100%',
+    w: '100%',
+    h: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -75,15 +75,15 @@ export const FloatInputWrapper = styled('div', {
 
   input: {
     paddingLeft: '.3125rem',
-    width: '19.625rem',
-    height: '1.875rem',
+    w: '19.625rem',
+    h: '1.875rem',
     fontSize: '1.125rem',
     border: 0,
     borderBottom: '2px solid #706AE5',
     outline: 'none',
 
     '@sm': {
-      width: '100%',
+      w: '100%',
     },
 
     '&:focus + label': {
@@ -99,8 +99,8 @@ export const FloatInputWrapper = styled('div', {
 })
 
 export const ImageContainer = styled('div', {
-  height: '100%',
-  width: '50%',
+  h: '100%',
+  w: '50%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -108,10 +108,10 @@ export const ImageContainer = styled('div', {
   backgroundColor: '#ffffff',
   opacity: 0.8,
   backgroundImage: 'radial-gradient(#000dff 1.5px, #ffffff 1.5px)',
-  backgroundSize: '30px 30px',
+  backgroundSize: '1.875rem 1.875rem',
 
   '@media(max-width: 880px)': {
-    width: '100%',
+    w: '100%',
   },
 
   '> div': {
@@ -119,8 +119,8 @@ export const ImageContainer = styled('div', {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    width: '100%',
+    h: '100%',
+    w: '100%',
     backgroundImage: 'url("https://i.imgur.com/OeloDl2.jpg")',
     backgroundSize: 'cover',
     color: '#FFF',
@@ -157,10 +157,10 @@ export const FormMiddleSection = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '20px',
+  gap: '1.25rem',
   boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 6px',
-  width: '90%',
-  height: '100%',
+  w: '90%',
+  h: '100%',
   br: '5px',
   pd: '2.9375rem 0px 0px 0px',
 
@@ -178,7 +178,7 @@ export const SideTextContainer = styled('div', {
   flexDirection: 'column',
   gap: '.625rem',
   alignSelf: 'flex-end',
-  width: '70%',
+  w: '70%',
   textAlign: 'center',
   overflowY: 'auto',
 
@@ -198,7 +198,7 @@ export const SideTextContainer = styled('div', {
   },
 
   '@media(max-width: 525px)': {
-    height: '60%',
+    h: '60%',
     overflowY: 'scroll',
     mt: 'unset',
   },
