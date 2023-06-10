@@ -31,6 +31,10 @@ export const Button = styled('button', {
 
         gap: '.625rem',
 
+        '@sm': {
+          w: '100%',
+        },
+
         '&:hover': {
           background: '#5951e9',
           mozTransform: 'scale(1.05)',
@@ -91,4 +95,20 @@ export const SocialMediaWrapper = styled('div', {
   display: 'flex',
   padding: '.9375rem .3125rem 0px .3125rem',
   borderBottom: '3px solid #807AFF',
+
+  '@media(max-width: 880px)': {
+    borderBottom: 'none',
+    paddingBottom: '5px',
+  },
+
+  '@media(max-width: 440px)': {
+    w: '85%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0,
+
+    svg: {
+      width: '2.1875rem',
+    },
+  },
 })

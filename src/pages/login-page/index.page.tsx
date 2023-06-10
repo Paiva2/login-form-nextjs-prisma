@@ -176,6 +176,7 @@ function LoginPage() {
               {errors.username && <h3>{errors.username.message}</h3>}
               {errors.password && <h3>{errors.password.message}</h3>}
             </FormErrorsWrapper>
+
             <p>
               Don&apos;t have an account?{' '}
               <Link href="/register">

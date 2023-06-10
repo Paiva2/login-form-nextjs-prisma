@@ -11,6 +11,15 @@ export const MainContainer = styled('div', {
   height: '46.875rem',
   justifyContent: 'center',
   br: '5px',
+
+  '@media(max-width: 980px)': {
+    minWidth: '95%',
+  },
+
+  '@media(max-width: 880px)': {
+    flexDirection: 'column-reverse',
+    height: 'auto',
+  },
 })
 
 export const FormWrapper = styled('div', {
@@ -21,6 +30,10 @@ export const FormWrapper = styled('div', {
   width: '50%',
   height: '90%',
   color: '#5A6268',
+
+  '@media(max-width: 880px)': {
+    w: '100%',
+  },
 
   h1: {
     textAlign: 'center',
@@ -39,6 +52,10 @@ export const FormWrapper = styled('div', {
 
 export const FloatInputWrapper = styled('div', {
   position: 'relative',
+
+  '@sm': {
+    w: '85%',
+  },
 
   label: {
     fontSize: '1.125rem',
@@ -60,6 +77,10 @@ export const FloatInputWrapper = styled('div', {
     border: 0,
     borderBottom: '2px solid #706AE5',
     outline: 'none',
+
+    '@sm': {
+      width: '100%',
+    },
 
     '&:focus + label': {
       top: -25,
@@ -85,6 +106,10 @@ export const ImageContainer = styled('div', {
   backgroundImage: 'radial-gradient(#000dff 1.5px, #ffffff 1.5px)',
   backgroundSize: '30px 30px',
 
+  '@media(max-width: 880px)': {
+    width: '100%',
+  },
+
   '> div': {
     display: 'flex',
     flexDirection: 'column',
@@ -96,6 +121,10 @@ export const ImageContainer = styled('div', {
     backgroundSize: 'cover',
     color: '#FFF',
     paddingRight: '.625rem',
+
+    '@media(max-width: 880px)': {
+      pd: 0,
+    },
   },
 })
 
@@ -104,6 +133,10 @@ export const FormFooter = styled('div', {
   alignItems: 'center',
   flexDirection: 'column',
   gap: '.8125rem',
+
+  '@sm': {
+    w: '85%',
+  },
 
   span: {
     color: '#807AFF',
@@ -127,6 +160,10 @@ export const FormMiddleSection = styled('div', {
   br: '5px',
   pd: '2.9375rem 0px 0px 0px',
 
+  '@media(max-width: 880px)': {
+    w: '100%',
+  },
+
   h1: {
     textDecoration: 'underline #807AFF',
   },
@@ -140,4 +177,30 @@ export const SideTextContainer = styled('div', {
   width: '70%',
   textAlign: 'center',
   overflowY: 'auto',
+
+  '@media(max-width: 880px)': {
+    h1: {
+      fontSize: '1.125rem',
+    },
+
+    p: {
+      fontSize: '.875rem',
+    },
+
+    w: '40%',
+    alignSelf: 'center',
+    mt: '5rem',
+    paddingBottom: '.625rem',
+  },
+
+  '@media(max-width: 525px)': {
+    height: '60%',
+    overflowY: 'scroll',
+    mt: 'unset',
+  },
+
+  '@media(max-width: 425px)': {
+    w: '60%',
+    mt: '5rem',
+  },
 })
