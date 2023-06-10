@@ -1,9 +1,6 @@
-## Not finished yet (basic validations with username and password are already finished and integrated with SQLite).
-# Working on
+# Login page with validations using Nextjs and Prisma
 
-- Auth with providers (~Google~, Facebook, Twitter)
-- Auth with providers validations
-- ~Home before login styles~ - Done
+### Twitter, Facebook and Google login are available.
 
 # Images
 
