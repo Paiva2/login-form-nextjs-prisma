@@ -175,9 +175,9 @@ function Register() {
             </FormErrorsWrapper>
 
             <p>
-              Forgot your{' '}
+              Change your{' '}
               <Link href="/reset-password">
-                <span>password?</span>
+                <span>password!</span>
               </Link>
             </p>
 

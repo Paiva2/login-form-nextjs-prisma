@@ -8,7 +8,7 @@ export const sideGreetings = {
     text: "We value your privacy and assure you that your information will be kept confidential. Once registered, you'll be able to explore our platform, connect with other users, and unlock exclusive benefits. Join our community today and embark on an incredible journey!",
   },
   forgotPasswordPage: {
-    title: 'Forgot Your Password?',
-    text: "Uh-oh! It happens to the best of us. If you've misplaced or forgotten your password, don't worry, we're here to help you regain access to your account.",
+    title: 'Wanna change your password?',
+    text: 'Changing your password is a simple and important step to ensure the security of your account. By updating your password regularly, you can minimize the risk of unauthorized access and protect your personal information.',
   },
 }
