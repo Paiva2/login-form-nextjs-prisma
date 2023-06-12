@@ -99,9 +99,16 @@ function ResetPassword() {
           <FloatInputWrapper>
             <input {...register('password')} type="password" />
             <label style={passwordInput ? floatLabel : isAnyInputFilled}>
-              Password
+              Old password
             </label>
           </FloatInputWrapper>
+          {/* 
+          <FloatInputWrapper>
+            <input {...register('newPassword')} type="password" />
+            <label style={confirmPasswordInput ? floatLabel : isAnyInputFilled}>
+              New password
+            </label>
+          </FloatInputWrapper> */}
 
           <FloatInputWrapper>
             <input {...register('confirmPassword')} type="password" />

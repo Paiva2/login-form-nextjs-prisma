@@ -11,7 +11,11 @@ export function useInputColors(
     checkFilledInputs = false
   }
 
-  const isAnyInputFilled = checkFilledInputs ? { color: 'red' } : {}
+  const isAnyInputFilled = checkFilledInputs
+    ? {
+        color: 'red',
+      }
+    : {}
 
   return { isAnyInputFilled }
 }

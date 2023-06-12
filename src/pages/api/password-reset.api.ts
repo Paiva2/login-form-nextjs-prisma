@@ -13,6 +13,10 @@ export default async function handler(
     return res.status(405).end()
   }
 
+  const bcrypt = require('bcrypt')
+  const saltRounds = 10
+  const passwordToHash = req.body.password
+
   const isUserAlreadyRegistered = await prisma.user.findUnique({
     where: {
       username: req.body.username,
@@ -20,17 +24,21 @@ export default async function handler(
   })
 
   if (!isUserAlreadyRegistered) {
-    return res.status(404).end('Username is not registered!')
+    return res.status(401).end('Username is not registered!')
   }
 
-  await prisma.user.update({
-    where: {
-      username: req.body.username,
-    },
-    data: {
-      password: req.body.password,
-    },
-  })
+  if (isUserAlreadyRegistered) {
+    const hashedPassword = bcrypt.hashSync(passwordToHash, saltRounds)
 
-  return res.status(200).end('Password updated with success!')
+    await prisma.user.update({
+      where: {
+        username: req.body.username,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    })
+
+    return res.status(200).end('Password updated with success!')
+  }
 }

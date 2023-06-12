@@ -23,7 +23,7 @@ export default async function handler(
     })
 
     if (!isEmailRegistered) {
-      return res.status(404).end('This e-mai is not registered!')
+      return res.status(401).end('This e-mai is not registered!')
     }
 
     return res.status(202).end(
@@ -41,7 +41,7 @@ export default async function handler(
   })
 
   if (!isUserAlreadyRegistered) {
-    return res.status(404).end('User is not registered!')
+    return res.status(401).end('User is not registered!')
   }
 
   if (isUserAlreadyRegistered) {
@@ -51,7 +51,7 @@ export default async function handler(
     )
 
     if (!checkIfHashPasswordMatch) {
-      return res.status(404).end('Incorrect password!')
+      return res.status(401).end('Incorrect password!')
     }
   }
 
