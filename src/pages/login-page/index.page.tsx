@@ -125,7 +125,7 @@ function LoginPage() {
 
   const validateCookieAndSession = () => {
     if (isLoginCookieAvailable) {
-      route.push('/home')
+      route.push('/home', '/home')
       return
     }
 

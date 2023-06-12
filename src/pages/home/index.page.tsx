@@ -27,7 +27,6 @@ const Home = () => {
   useLayoutEffect(() => {
     if (session.status !== 'authenticated' && !isLoginCookieAvailable) {
       signOut({ callbackUrl: '/' })
-      route.push('/')
     } else {
       setMounted(true)
     }
