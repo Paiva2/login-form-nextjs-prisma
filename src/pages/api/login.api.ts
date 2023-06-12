@@ -13,6 +13,8 @@ export default async function handler(
     return res.status(405).end()
   }
 
+  const bcrypt = require('bcrypt')
+
   if (req.body?.email) {
     const isEmailRegistered = await prisma.user.findUnique({
       where: {
@@ -38,16 +40,16 @@ export default async function handler(
     },
   })
 
-  const bcrypt = require('bcrypt')
-
-  const checkIfHashPasswordMatch = await bcrypt.compareSync(
-    req.body.password,
-    isUserAlreadyRegistered?.password,
-  )
-
   if (!isUserAlreadyRegistered) {
     return res.status(404).end('User is not registered!')
-  } else if (isUserAlreadyRegistered) {
+  }
+
+  if (isUserAlreadyRegistered) {
+    const checkIfHashPasswordMatch = await bcrypt.compareSync(
+      req.body.password,
+      isUserAlreadyRegistered?.password,
+    )
+
     if (!checkIfHashPasswordMatch) {
       return res.status(404).end('Incorrect password!')
     }
