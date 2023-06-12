@@ -26,7 +26,7 @@ export default async function handler(
 
     return res.status(202).end(
       JSON.stringify({
-        pathname: '/home',
+        pathname: '/authenticated',
         query: { user: req.body.name },
       }),
     )
@@ -46,9 +46,10 @@ export default async function handler(
     }
   }
 
-  return res
-    .status(202)
-    .end(
-      JSON.stringify({ pathname: '/home', query: { user: req.body.username } }),
-    )
+  return res.status(202).end(
+    JSON.stringify({
+      pathname: '/authenticated',
+      query: { user: req.body.username },
+    }),
+  )
 }

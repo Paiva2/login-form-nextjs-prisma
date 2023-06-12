@@ -81,7 +81,7 @@ function LoginPage() {
       if (response.status === 202) {
         reset()
         setCookie('loginFormID', data.username, { maxAge: 25200 })
-        route.push(response.data, '/home/')
+        route.push(response.data, '/home')
       }
 
       return response
@@ -112,7 +112,7 @@ function LoginPage() {
       setCookie('loginFormID', session.user?.name, { maxAge: 25200 }) // 7hrs
 
       if (response.status === 202) {
-        route.push(response.data, '/home/')
+        route.push(response.data, '/home')
       }
     } catch (error) {
       if (error instanceof AxiosError) {
