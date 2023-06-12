@@ -19,13 +19,16 @@ import { AxiosError } from 'axios'
 
 const loginFormSchema = z
   .object({
-    username: z.string(),
-    password: z
+    username: z
+      .string()
+      .min(3, { message: 'Username must be at least 3 characters!' }),
+    oldPassword: z.string(),
+    newPassword: z
       .string()
       .min(3, { message: 'Password must be at least 3 characters!' }),
     confirmPassword: z.string(),
   })
-  .refine((field) => field.password === field.confirmPassword, {
+  .refine((field) => field.newPassword === field.confirmPassword, {
     message: "Passwords don't match!",
     path: ['confirmPassword'],
   })
@@ -60,7 +63,9 @@ function ResetPassword() {
 
   const usernameInput = watch('username')
 
-  const passwordInput = watch('password')
+  const oldPasswordInput = watch('oldPassword')
+
+  const newPasswordInput = watch('newPassword')
 
   const confirmPasswordInput = watch('confirmPassword')
 
@@ -72,7 +77,8 @@ function ResetPassword() {
 
   const { isAnyInputFilled } = useInputColors(
     usernameInput,
-    passwordInput,
+    oldPasswordInput,
+    newPasswordInput,
     confirmPasswordInput,
   )
 
@@ -97,23 +103,23 @@ function ResetPassword() {
           </FloatInputWrapper>
 
           <FloatInputWrapper>
-            <input {...register('password')} type="password" />
-            <label style={passwordInput ? floatLabel : isAnyInputFilled}>
+            <input {...register('oldPassword')} type="password" />
+            <label style={oldPasswordInput ? floatLabel : isAnyInputFilled}>
               Old password
             </label>
           </FloatInputWrapper>
-          {/* 
+
           <FloatInputWrapper>
             <input {...register('newPassword')} type="password" />
-            <label style={confirmPasswordInput ? floatLabel : isAnyInputFilled}>
+            <label style={newPasswordInput ? floatLabel : isAnyInputFilled}>
               New password
             </label>
-          </FloatInputWrapper> */}
+          </FloatInputWrapper>
 
           <FloatInputWrapper>
             <input {...register('confirmPassword')} type="password" />
             <label style={confirmPasswordInput ? floatLabel : isAnyInputFilled}>
-              Confirm password
+              Confirm new password
             </label>
           </FloatInputWrapper>
 
@@ -127,7 +133,7 @@ function ResetPassword() {
             </Button>
             <FormErrorsWrapper>
               {<h3>{errors.username?.message}</h3>}
-              {<h3>{errors.password?.message}</h3>}
+              {<h3>{errors.newPassword?.message}</h3>}
               {<h3>{errors.confirmPassword?.message}</h3>}
             </FormErrorsWrapper>
           </FormFooter>

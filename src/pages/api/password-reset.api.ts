@@ -15,7 +15,7 @@ export default async function handler(
 
   const bcrypt = require('bcrypt')
   const saltRounds = 10
-  const passwordToHash = req.body.password
+  const passwordToHash = req.body.newPassword
 
   const isUserAlreadyRegistered = await prisma.user.findUnique({
     where: {
@@ -28,17 +28,26 @@ export default async function handler(
   }
 
   if (isUserAlreadyRegistered) {
-    const hashedPassword = bcrypt.hashSync(passwordToHash, saltRounds)
+    const checkIfHashOldPasswordMatch = await bcrypt.compareSync(
+      req.body.oldPassword,
+      isUserAlreadyRegistered?.password,
+    )
 
-    await prisma.user.update({
-      where: {
-        username: req.body.username,
-      },
-      data: {
-        password: hashedPassword,
-      },
-    })
+    if (isUserAlreadyRegistered && checkIfHashOldPasswordMatch) {
+      const hashedNewPassword = bcrypt.hashSync(passwordToHash, saltRounds)
 
-    return res.status(200).end('Password updated with success!')
+      await prisma.user.update({
+        where: {
+          username: req.body.username,
+        },
+        data: {
+          password: hashedNewPassword,
+        },
+      })
+
+      return res.status(200).end('Password updated with success!')
+    } else {
+      return res.status(401).end('Wrong old password!')
+    }
   }
 }
