@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL_IDENTIFIER")
+  provider     = "mysql"
+  url          = env("DATABASE_URL_IDENTIFIER")
+  relationMode = "prisma"
 }
 
 model User {
@@ -27,16 +28,17 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refreshToken      String?
-  acessToken        String?
+  refreshToken      String? @db.Text
+  acessToken        String? @db.Text
   expiresAt         Int?
-  tokenType         String?
-  scope             String?
-  idToken           String?
+  tokenType         String? @db.Text
+  scope             String? @db.Text
+  idToken           String? @db.Text
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
   @@map("accounts")
 }
 
@@ -49,4 +51,6 @@ model Session {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
