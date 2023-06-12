@@ -35,6 +35,10 @@ export default async function handler(
     return res.status(201).end('Register successful!')
   }
 
+  const bcrypt = require('bcrypt')
+  const saltRounds = 10
+  const passwordToHash = req.body.password
+
   const isUserAlreadyRegistered = await prisma.user.findUnique({
     where: {
       username: req.body.username,
@@ -45,10 +49,12 @@ export default async function handler(
     return res.status(409).end('User is already registered!')
   }
 
+  const hashedPassword = bcrypt.hashSync(passwordToHash, saltRounds)
+
   await prisma.user.create({
     data: {
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
     },
   })
 

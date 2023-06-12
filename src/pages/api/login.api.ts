@@ -38,10 +38,17 @@ export default async function handler(
     },
   })
 
+  const bcrypt = require('bcrypt')
+
+  const checkIfHashPasswordMatch = await bcrypt.compareSync(
+    req.body.password,
+    isUserAlreadyRegistered?.password,
+  )
+
   if (!isUserAlreadyRegistered) {
     return res.status(404).end('User is not registered!')
   } else if (isUserAlreadyRegistered) {
-    if (isUserAlreadyRegistered.password !== req.body.password) {
+    if (!checkIfHashPasswordMatch) {
       return res.status(404).end('Incorrect password!')
     }
   }
